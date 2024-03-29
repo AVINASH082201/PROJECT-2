@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  db:
+    image: mysql:8.0.19
+    command: 'default-authentication-plugin=mysql_native_password'
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_NAME: wordpress
+      MYSQL_USER: avinash
+      MYSQL_PASSWORD: database
+    volumes:
+      - db-data:/var/lib/mysql
+  wordpress:
+    image: wordpress:latest
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: avinash
+      WORDPRESS_DB_PASSWORD: database
+    volumes:
+      - wp-data:/var/www/html
+volumes:
+  wp-data:
+  db-data:
+
